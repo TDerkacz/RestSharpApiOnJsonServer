@@ -4,14 +4,14 @@ Fake Json Server instructions
 2. npm install -g json-server
 3. C:\Users\user\AppData\Roaming\npm json-server –-watch jsonServer.json // does not work
 4. C:\Users\user\AppData\Roaming\npm>json-server -w jsonServer.json // this works
-5. http://localhost:3000/posts/1
 
+call examples :
 
-API example :
-
+http://localhost:3000/posts/1
 http://localhost:3000/post?id=1
+http://localhost:3000/post?limit=2
 
-response:
+response e.g.:
 
 [
   {

@@ -11,20 +11,21 @@ namespace RestSharpApiOnJsonServer
         [TestMethod]
         public void TestMethodGetResponse()
         {
-            var client = new RestClient("http://localhost:3000");
+            IRestClient client = new RestClient("http://localhost:3000");
 
-            var request = new RestRequest("post/{postid}", Method.GET);
-            // refer to resource
+            RestRequest request = new RestRequest("post/{postid}", Method.GET);
+            // in refer to resource post
+
             request.AddUrlSegment("postid", 1);
+            // in refer to resource post/1
 
             var content = client.Execute(request).Content;
             // content is a string
 
-            var response = client.Execute(request);
+            IRestResponse response = client.Execute(request);
 
             var deserialize = new JsonDeserializer();
             var output = deserialize.Deserialize<Dictionary<string, string>>(response);
-
 
         }
     }

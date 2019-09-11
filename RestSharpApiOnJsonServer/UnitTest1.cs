@@ -1,13 +1,15 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestSharp;
+using RestSharp.Serialization.Json;
+using System.Collections.Generic;
 
 namespace RestSharpApiOnJsonServer
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTestGetResponse
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestMethodGetResponse()
         {
             var client = new RestClient("http://localhost:3000");
 
@@ -16,7 +18,13 @@ namespace RestSharpApiOnJsonServer
             request.AddUrlSegment("postid", 1);
 
             var content = client.Execute(request).Content;
-            // response is a string
+            // content is a string
+
+            var response = client.Execute(request);
+
+            var deserialize = new JsonDeserializer();
+            var output = deserialize.Deserialize<Dictionary<string, string>>(response);
+
 
         }
     }

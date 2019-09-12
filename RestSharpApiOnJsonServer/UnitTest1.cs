@@ -1,6 +1,7 @@
 using RestSharp;
 using RestSharp.Serialization.Json;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
@@ -10,7 +11,7 @@ namespace RestSharpApiOnJsonServer
     public class UnitTestGetResponse
     {
         [Test]
-        public void GetResponseDeserializeWithRestSharp()
+        public void GetResponseDeserializedWithRestSharp()
         {
             IRestClient client = new RestClient("http://localhost:3000");
 
@@ -27,6 +28,23 @@ namespace RestSharpApiOnJsonServer
 
             var result = output["key"];
             Assert.That(result, Is.EqualTo("NEW"), "Field is different than expected");
+        }
+
+        [Test]
+        public void GetResponseDeserializedWithNewtonSoft()
+        {
+            IRestClient client = new RestClient("http://localhost:3000");
+
+            RestRequest request = new RestRequest("post/{postid}", Method.GET);
+
+            request.AddUrlSegment("postid", 1);
+
+            var content = client.Execute(request).Content;
+
+            IRestResponse response = client.Execute(request);
+
+            JObject obj = JObject.Parse(response.Content);
+            Assert.That(obj["key"], Is.EqualTo("NEW"), "Field is different than expected");
         }
     }
 }

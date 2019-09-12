@@ -1,4 +1,3 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestSharp;
 using RestSharp.Serialization.Json;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace RestSharpApiOnJsonServer
     {
         // [TestMethod] MSTest
         [Test] // NUnit
-        public void TestMethodGetResponse()
+        public void GetResponseDeserializeWithRestSharp()
         {
             IRestClient client = new RestClient("http://localhost:3000");
 
@@ -32,13 +31,13 @@ namespace RestSharpApiOnJsonServer
             var output = deserialize.Deserialize<Dictionary<string, string>>(response);
 
             var result = output["key"];
-            Assert.That(result, Is.EqualTo("NEW"));
+            Assert.That(result, Is.EqualTo("NEW"), "Field is different than expected");
 
 
             // ---> add package
             // NUnit
 
-            // ---> remove packages
+            // ---> remove MSTest packages and code
 
             // Microsoft.VisualStudio.Test
             // Microsoft.VisualStudio.TestTools.UnitTesting.Assert();

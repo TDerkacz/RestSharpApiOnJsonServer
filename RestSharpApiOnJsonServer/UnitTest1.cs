@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 using RestSharpApiOnJsonServer.Models;
+using RestSharpApiOnJsonServer.Utils;
 
 namespace RestSharpApiOnJsonServer
 {
@@ -120,26 +121,7 @@ namespace RestSharpApiOnJsonServer
 
             var response = client.Execute<Post>(request);
 
-            var result = ExecuteAsyncRequestTask<Post>(client, request).GetAwaiter().GetResult();
-        }
-
-        private async Task<IRestResponse<T>> ExecuteAsyncRequestTask<T>(RestClient client, IRestRequest request)
-            where T : class, new()
-        {
-            var taskCompletionSource = new TaskCompletionSource<IRestResponse<T>>();
-
-            client.ExecuteAsync<T>(request, restResponse =>
-            {
-                if (restResponse.ErrorException != null)
-                {
-                    const string message = "Error retrieving response";
-                    throw new ApplicationException(message, restResponse.ErrorException);
-                }
-
-                taskCompletionSource.SetResult(restResponse);
-            });
-
-            return await taskCompletionSource.Task;
+            var result = Library.ExecuteAsyncRequestTask<Post>(client, request).GetAwaiter().GetResult();
         }
     }
 }

@@ -6,24 +6,19 @@ using Assert = NUnit.Framework.Assert;
 
 namespace RestSharpApiOnJsonServer
 {
-    // [TestClass] MSTest
-    [TestFixture] // NUnit
+    [TestFixture]
     public class UnitTestGetResponse
     {
-        // [TestMethod] MSTest
-        [Test] // NUnit
+        [Test]
         public void GetResponseDeserializeWithRestSharp()
         {
             IRestClient client = new RestClient("http://localhost:3000");
 
             RestRequest request = new RestRequest("post/{postid}", Method.GET);
-            // in refer to resource post
 
             request.AddUrlSegment("postid", 1);
-            // in refer to resource post/1
 
             var content = client.Execute(request).Content;
-            // content is a string
 
             IRestResponse response = client.Execute(request);
 
@@ -32,20 +27,6 @@ namespace RestSharpApiOnJsonServer
 
             var result = output["key"];
             Assert.That(result, Is.EqualTo("NEW"), "Field is different than expected");
-
-
-            // ---> add package
-            // NUnit
-
-            // ---> remove MSTest packages and code
-
-            // Microsoft.VisualStudio.Test
-            // Microsoft.VisualStudio.TestTools.UnitTesting.Assert();
-
-            // MSTest.TestAdapter
-            // MSTest.TestFramework
-            // [TestClass] MSTest
-            // [TestMethod] MSTest
         }
     }
 }

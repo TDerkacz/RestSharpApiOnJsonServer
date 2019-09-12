@@ -91,5 +91,23 @@ namespace RestSharpApiOnJsonServer
 
             Assert.That(result, Is.EqualTo("CARS"), "Key value is different than expected");
         }
+
+        [Test]
+        public void PostAndDeserializedResponseByGenericTypeDataModel()
+        {
+            IRestClient client = new RestClient("http://localhost:3000");
+
+            RestRequest request = new RestRequest("post", Method.POST);
+
+
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(new Post() { Id = "4", Key = "CARS", Language = "EN_FI" });
+            //request.AddUrlSegment("postid", 1);
+
+            // extracting data in shape of data model
+            var response = client.Execute<Post>(request);
+
+            Assert.That(response.Data.Key, Is.EqualTo("CARS"), "Key value is different than expected");
+        }
     }
 }

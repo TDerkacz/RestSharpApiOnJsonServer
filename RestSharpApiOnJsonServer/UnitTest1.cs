@@ -44,7 +44,7 @@ namespace RestSharpApiOnJsonServer
             IRestResponse response = client.Execute(request);
 
             JObject obj = JObject.Parse(response.Content);
-            Assert.That(obj["key"], Is.EqualTo("NEW"), "Field is different than expected");
+            Assert.That(obj["key"].ToString(), Is.EqualTo("NEW"), "Field is different than expected");
         }
     }
 }

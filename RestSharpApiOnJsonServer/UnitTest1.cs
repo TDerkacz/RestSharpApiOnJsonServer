@@ -46,5 +46,29 @@ namespace RestSharpApiOnJsonServer
             JObject obj = JObject.Parse(response.Content);
             Assert.That(obj["key"].ToString(), Is.EqualTo("NEW"), "Field is different than expected");
         }
+
+        [Test]
+        public void PostWithAnonymousMethod()
+        {
+            IRestClient client = new RestClient("http://localhost:3000");
+
+            RestRequest request = new RestRequest("post/{postid}/profile", Method.POST);
+
+            // passing data in Json format
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(new {name = "John"});
+            request.AddUrlSegment("postid", 1);
+
+            IRestResponse response = client.Execute(request);
+
+            var deserialize = new JsonDeserializer();
+            var output = deserialize.Deserialize<Dictionary<string, string>>(response);
+
+            var result = output["name"];
+
+
+            JObject obj = JObject.Parse(response.Content);
+            Assert.That(obj["key"].ToString(), Is.EqualTo("NEW"), "Field is different than expected");
+        }
     }
 }

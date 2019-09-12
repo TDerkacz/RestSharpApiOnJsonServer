@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApiExcercisingJsonServer.Models
+namespace RestSharpApiOnJsonServer.Models
 {
     public class Post
     {

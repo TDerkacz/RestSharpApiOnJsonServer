@@ -3,10 +3,10 @@ using RestSharp;
 using RestSharp.Serialization.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApiExcercisingJsonServer.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
+using RestSharpApiOnJsonServer.Models;
 
 namespace RestSharpApiOnJsonServer
 {
@@ -55,11 +55,10 @@ namespace RestSharpApiOnJsonServer
         {
             IRestClient client = new RestClient("http://localhost:3000");
 
-            RestRequest request = new RestRequest("post/{postid}/profile", Method.POST);
+            RestRequest request = new RestRequest("post", Method.POST);
 
-            // passing data in Json format
             request.RequestFormat = DataFormat.Json;
-            request.AddBody(new {name = "John"});
+            request.AddJsonBody(new {name = "John"});
             request.AddUrlSegment("postid", 1);
 
             IRestResponse response = client.Execute(request);
@@ -81,7 +80,7 @@ namespace RestSharpApiOnJsonServer
 
             
             request.RequestFormat = DataFormat.Json;
-            request.AddBody(new Post(){ Id = "4", Key = "CARS", Language = "EN_FI" });
+            request.AddJsonBody(new Post(){ Id = "4", Key = "CARS", Language = "EN_FI" });
             request.AddUrlSegment("postid", 1);
 
             IRestResponse response = client.Execute(request);
@@ -102,7 +101,7 @@ namespace RestSharpApiOnJsonServer
             RestRequest request = new RestRequest("post", Method.POST);
 
             request.RequestFormat = DataFormat.Json;
-            request.AddBody(new Post() { Id = "4", Key = "CARS", Language = "EN_FI" });
+            request.AddJsonBody(new Post() { Id = "4", Key = "CARS", Language = "EN_FI" });
 
             var response = client.Execute<Post>(request);
 
@@ -117,7 +116,7 @@ namespace RestSharpApiOnJsonServer
             RestRequest request = new RestRequest("post", Method.POST);
 
             request.RequestFormat = DataFormat.Json;
-            request.AddBody(new Post() { Id = "5", Key = "CARS", Language = "EN_FI" });
+            request.AddJsonBody(new Post() { Id = "5", Key = "CARS", Language = "EN_FI" });
 
             var response = client.Execute<Post>(request);
 

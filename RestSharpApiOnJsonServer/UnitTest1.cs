@@ -112,7 +112,16 @@ namespace RestSharpApiOnJsonServer
         [Test]
         public void PostWithAsync()
         {
-            
+            RestClient client = new RestClient("http://localhost:3000");
+
+            RestRequest request = new RestRequest("post", Method.POST);
+
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(new Post() { Id = "5", Key = "CARS", Language = "EN_FI" });
+
+            var response = client.Execute<Post>(request);
+
+            var result = ExecuteAsyncRequestTask<Post>(client, request).GetAwaiter().GetResult();
         }
 
         private async Task<IRestResponse<T>> ExecuteAsyncRequestTask<T>(RestClient client, IRestRequest request)

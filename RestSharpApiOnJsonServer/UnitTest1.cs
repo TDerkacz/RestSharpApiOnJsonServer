@@ -1,6 +1,8 @@
+using System;
 using RestSharp;
 using RestSharp.Serialization.Json;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApiExcercisingJsonServer.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -99,15 +101,37 @@ namespace RestSharpApiOnJsonServer
 
             RestRequest request = new RestRequest("post", Method.POST);
 
-
             request.RequestFormat = DataFormat.Json;
             request.AddBody(new Post() { Id = "4", Key = "CARS", Language = "EN_FI" });
-            //request.AddUrlSegment("postid", 1);
 
-            // extracting data in shape of data model
             var response = client.Execute<Post>(request);
 
             Assert.That(response.Data.Key, Is.EqualTo("CARS"), "Key value is different than expected");
+        }
+
+        [Test]
+        public void PostWithAsync()
+        {
+            
+        }
+
+        private async Task<IRestResponse<T>> ExecuteAsyncRequestTask<T>(RestClient client, IRestRequest request)
+            where T : class, new()
+        {
+            var taskCompletionSource = new TaskCompletionSource<IRestResponse<T>>();
+
+            client.ExecuteAsync<T>(request, restResponse =>
+            {
+                if (restResponse.ErrorException != null)
+                {
+                    const string message = "Error retrieving response";
+                    throw new ApplicationException(message, restResponse.ErrorException);
+                }
+
+                taskCompletionSource.SetResult(restResponse);
+            });
+
+            return await taskCompletionSource.Task;
         }
     }
 }

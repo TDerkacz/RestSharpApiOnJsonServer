@@ -1,7 +1,7 @@
 ﻿using RestSharp;
+using RestSharp.Serialization.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RestSharpApiOnJsonServer.Utils
@@ -25,6 +25,14 @@ namespace RestSharpApiOnJsonServer.Utils
             });
 
             return await taskCompletionSource.Task;
+        }
+        
+
+        public static Dictionary<string, string> DeserializeResponse(this IRestResponse restResponse)
+        {
+            var deserialize = new JsonDeserializer();
+            var jsonObject = deserialize.Deserialize<Dictionary<string, string>>(restResponse);
+            return jsonObject;
         }
     }
 }

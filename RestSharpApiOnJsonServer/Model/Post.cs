@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RestSharpApiOnJsonServer.Models
+﻿namespace RestSharpApiOnJsonServer.Models
 {
     public class Post
     {

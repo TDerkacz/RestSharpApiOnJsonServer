@@ -38,7 +38,7 @@ namespace RestSharpApiOnJsonServer.Utils
         }
 
         // response based on NewtonSoft Json deserialisation
-        public static string GetResponseAsJsonObject(this IRestResponse response, string responseObject)
+        public static string GetValueFromJsonObject(this IRestResponse response, string responseObject)
         {
             JObject obj = JObject.Parse(response.Content);
             return obj[responseObject].ToString();

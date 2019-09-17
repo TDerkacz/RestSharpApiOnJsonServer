@@ -48,7 +48,7 @@ namespace RestSharpApiOnJsonServer
             //JObject obj = JObject.Parse(response.Content);
             //Assert.That(obj["key"].ToString(), Is.EqualTo("NEW"), "Field is different than expected");
 
-            var result = response.GetResponseAsJsonObject("key");
+            var result = response.GetValueFromJsonObject("key");
             Assert.That(result, Is.EqualTo("NEW"), "Field is different than expected");
         }
 

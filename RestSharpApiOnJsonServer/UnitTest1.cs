@@ -33,7 +33,7 @@ namespace RestSharpApiOnJsonServer
         }
 
         [Test]
-        public void GetResponseDeserializedWithNewtonSoft()
+        public void GetResponseDeserializedWithNewtonSoftPackage()
         {
             IRestClient client = new RestClient("http://localhost:3000");
 
@@ -45,8 +45,11 @@ namespace RestSharpApiOnJsonServer
 
             IRestResponse response = client.Execute(request);
 
-            JObject obj = JObject.Parse(response.Content);
-            Assert.That(obj["key"].ToString(), Is.EqualTo("NEW"), "Field is different than expected");
+            //JObject obj = JObject.Parse(response.Content);
+            //Assert.That(obj["key"].ToString(), Is.EqualTo("NEW"), "Field is different than expected");
+
+            var result = response.GetResponseAsJsonObject("key");
+            Assert.That(result, Is.EqualTo("NEW"), "Field is different than expected");
         }
 
         [Test]
@@ -82,10 +85,6 @@ namespace RestSharpApiOnJsonServer
             request.AddUrlSegment("postid", 1);
 
             IRestResponse response = client.Execute(request);
-
-            //var deserialize = new JsonDeserializer();
-            //var output = deserialize.Deserialize<Dictionary<string, string>>(response);
-            //var result = output["Key"];
 
             var result = response.DeserializeResponse()["Key"];
 

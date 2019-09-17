@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json.Linq;
+using RestSharp;
 using RestSharp.Serialization.Json;
 using System;
 using System.Collections.Generic;
@@ -26,13 +27,21 @@ namespace RestSharpApiOnJsonServer.Utils
 
             return await taskCompletionSource.Task;
         }
-        
 
+
+        // response based on RestSharp and Dictionary stucture
         public static Dictionary<string, string> DeserializeResponse(this IRestResponse restResponse)
         {
             var deserialize = new JsonDeserializer();
             var jsonObject = deserialize.Deserialize<Dictionary<string, string>>(restResponse);
             return jsonObject;
+        }
+
+        // response based on NewtonSoft Json deserialisation
+        public static string GetResponseAsJsonObject(this IRestResponse response, string responseObject)
+        {
+            JObject obj = JObject.Parse(response.Content);
+            return obj[responseObject].ToString();
         }
     }
 }

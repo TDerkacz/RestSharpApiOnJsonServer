@@ -3,7 +3,7 @@ Fake Json Server instructions
 1. install Node.js
 2. npm install -g json-server
 3. C:\Users\user\AppData\Roaming\npm json-server –-watch jsonServer.json // does not work
-4. C:\Users\user\AppData\Roaming\npm>json-server -w jsonServer.json // this works
+4. C:\Users\user\AppData\Roaming\npm json-server -w jsonServer.json // this works
 
 call examples :
 
